@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
-
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/users');
+var bodyParser = require('body-parser')
+
 require('dotenv').config();
-const users = require('./routes/users');
 
 const port = process.env.PORT || 8000;
 
@@ -17,10 +18,11 @@ mongoose.connect(process.env.DATABASE_URL, {
     console.log("database connected!");
 });
 
-app.use("/users", users);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use("/users", userRoutes);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 })
-
-// mongodb+srv://anhtung:<password>@cluster0.vhyeh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
