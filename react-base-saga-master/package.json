@@ -1,0 +1,66 @@
+{
+  "name": "basereactsaga",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.1.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
+    "immutable": "^4.0.0-rc.12",
+    "lodash": "^4.17.20",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "redux-actions": "^2.6.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-immutable": "^4.0.0",
+    "redux-saga": "^1.1.3"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "lint": "eslint --ext .js --ignore-path .gitignore ."
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.1.0",
+    "autoprefixer": "^9",
+    "craco-alias": "^2.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-import-resolver-webpack": "^0.12.1",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-import-order-autofix": "^0.8.3",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8",
+    "node-sass": "^4.14.1",
+    "postcss": "^7",
+    "postcss-cli": "^7.1.1",
+    "prettier": "2.0.5",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
