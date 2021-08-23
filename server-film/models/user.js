@@ -17,6 +17,10 @@ const userSchema = mongoose.Schema({
         type: String,
         default: ""
     },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     history: {
         type: Array,
         default: []
