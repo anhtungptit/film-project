@@ -2,6 +2,11 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client("733397129937-suoq2fgffo8br6hsqutkubqtn80u0bqf.apps.googleusercontent.com")
+
+const fetch = require('node-fetch');
+
 exports.user_login = async (req, res) => {
     try{
         const user = await User.findOne({ userEmail: req.body.userEmail});
@@ -36,6 +41,105 @@ exports.user_login = async (req, res) => {
         return res.json({error: err});
     }
 }
+
+exports.user_loginFaceBook = async (req, res) => {
+    const {userID, accessToken} = req.body;
+
+    let urlGraphFacebook = `https://graph.facebook.com/v2.11/${userID}/?fields=name,email,picture&access_token=${accessToken}`
+    const response = await fetch(urlGraphFacebook, {
+        method: 'GET'
+    })
+    .then(res => res.json());
+
+    const {name, email, picture} = response;
+    const userCheck = await User.findOne({ userEmail: email});
+    if(userCheck){
+        if(!userCheck.isActive){
+            return res.json({ message: "Tài khoản của bạn đã bị khóa"});
+        }
+        jwt.sign({
+            username: userCheck.userName
+        }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "24h"}, (err, token) => {
+            if(err){
+                return res.json({error: err})
+            }else {
+                return res.json({
+                    message: "You are logged in",
+                    username: userCheck.userName,
+                    avatar: userCheck.avatar,
+                    history: userCheck.history,
+                    token: token
+                })
+            }
+        })
+    } else {
+        bcrypt.hash(password = "", 10, async (err, hash) => {
+            if(err){
+                return res.json({error: err});
+            }else {
+                const user = new User({
+                    userName: name,
+                    userEmail: email,
+                    password: hash,
+                    avatar: picture.data.url
+                });
+                const savedUser = await user.save();
+                return res.json({
+                    message: "User created succesfully",
+                    user: savedUser
+                })
+            }
+        });
+    }
+}
+
+exports.user_loginGoogle = async (req, res) => {
+    const {tokenId} = req.body;
+
+    const response = await client.verifyIdToken({idToken: tokenId, audience: '733397129937-suoq2fgffo8br6hsqutkubqtn80u0bqf.apps.googleusercontent.com'});
+    const {email_verified, email, name, picture} = response.payload;
+    if(email_verified){
+        const userCheck = await User.findOne({ userEmail: email});
+        if(userCheck){
+            if(!userCheck.isActive){
+                return res.json({ message: "Tài khoản của bạn đã bị khóa"});
+            }
+            jwt.sign({
+                username: userCheck.userName
+            }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "24h"}, (err, token) => {
+                if(err){
+                    return res.json({error: err})
+                }else {
+                    return res.json({
+                        message: "You are logged in",
+                        username: userCheck.userName,
+                        avatar: userCheck.avatar,
+                        history: userCheck.history,
+                        token: token
+                    })
+                }
+            })
+        } else {
+            bcrypt.hash(password = "", 10, async (err, hash) => {
+                if(err){
+                    return res.json({error: err});
+                }else {
+                    const user = new User({
+                        userName: name,
+                        userEmail: email,
+                        password: hash,
+                        avatar: picture
+                    });
+                    const savedUser = await user.save();
+                    return res.json({
+                        message: "User created succesfully",
+                        user: savedUser
+                    })
+                }
+            });
+        }
+    }
+} 
 
 exports.user_signup = async(req, res) => {
     try{

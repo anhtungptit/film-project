@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
-import { userActions, userSelectors} from '../../../state/modules/user';
+import { userActions, userSelectors } from '../../../state/modules/user';
 
 function Login() {
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const user = useSelector(userSelectors.user);
+
+    useEffect(() => {
+        if (user !== null) {
+            const entries = new Map(user._root.entries);
+            const userObj = Object.fromEntries(entries);
+            console.log(userObj);
+            const cookies = new Cookies();
+            cookies.set('tokenUser', userObj.token);
+        }
+    }, [user]);
 
     const dispatch = useDispatch();
 
     const responseSuccessGoogle = (res) => {
         console.log(res);
-        console.log('success');
+        dispatch(userActions.loginGoogle({tokenId: res.tokenId}));
     };
 
     const responseFailGoogle = (res) => {
@@ -24,8 +34,8 @@ function Login() {
         console.log('fail');
     };
 
-    const responseFacebook = (response) => {
-        console.log(response);
+    const responseFacebook = (res) => {
+        dispatch(userActions.loginFacebook({userID: res.userID, accessToken: res.accessToken }));
     };
 
     const handleSubmit = (e) => {
@@ -33,7 +43,6 @@ function Login() {
         console.log(userEmail, password);
         dispatch(userActions.login({userEmail, password }));
         e.target.reset();
-        console.log(user);
     };
 
     return (
@@ -43,7 +52,7 @@ function Login() {
                 alt='t'
                 className='w-44 absolute top-6 left-8'
             />
-            <form onSubmit={handleSubmit} className='bg-black bg-opacity-80 flex flex-col justify-center text-white text-lg px-12 w-2/7 h-3/4'>
+            <form onSubmit={handleSubmit} className='bg-black bg-opacity-80 flex flex-col justify-center text-white text-lg px-12 sm:w-2/4 lg:w-2/7 h-3/4'>
                 <span className='text-3xl font-medium'>Đăng nhập</span>
                 <div className='w-full mt-8 mb-4'>
                     <input
@@ -86,7 +95,7 @@ function Login() {
                         />
                         <FacebookLogin
                             appId='518729469235949'
-                            autoLoad
+                            autoLoad={false}
                             fields='name,email,picture'
                             callback={responseFacebook}
                             textButton='Facebook'
