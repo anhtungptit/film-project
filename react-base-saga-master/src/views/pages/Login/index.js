@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import { Link } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import { Link, useHistory } from 'react-router-dom';
 
 import { userActions, userSelectors } from '../../../state/modules/user';
 
@@ -17,12 +16,11 @@ function Login() {
             const entries = new Map(user._root.entries);
             const userObj = Object.fromEntries(entries);
             console.log(userObj);
-            const cookies = new Cookies();
-            cookies.set('tokenUser', userObj.token);
         }
     }, [user]);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const responseSuccessGoogle = (res) => {
         console.log(res);
@@ -43,15 +41,18 @@ function Login() {
         console.log(userEmail, password);
         dispatch(userActions.login({userEmail, password }));
         e.target.reset();
+        history.push('/');
     };
 
     return (
         <div className='login w-full h-screen bg-login-background bg-cover flex justify-center items-center'>
-            <img
-                src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png'
-                alt='t'
-                className='w-44 absolute top-6 left-8'
-            />
+            <Link to='/home'>
+                <img
+                    src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png'
+                    alt='logo'
+                    className='w-44 absolute top-6 left-8 cursor-pointer'
+                />
+            </Link>
             <form onSubmit={handleSubmit} className='bg-black bg-opacity-80 flex flex-col justify-center text-white text-lg px-12 sm:w-2/4 lg:w-2/7 h-3/4'>
                 <span className='text-3xl font-medium'>Đăng nhập</span>
                 <div className='w-full mt-8 mb-4'>
@@ -79,7 +80,7 @@ function Login() {
                 <Link className='text-base text-red-600 mb-2' to='/'>Quên mật khẩu</Link>
                 <div className='text-base font-medium mb-4'>
                     <span>Chưa có tài khoản ? </span>
-                    <Link className='text-red-600' to='/'>Đăng ký ngay</Link>
+                    <Link className='text-red-600' to='/register'>Đăng ký ngay</Link>
                 </div>
                 <div className='flex flex-col items-center mb-1 border-t border-gray-800'>
                     <span className='text-sm text-gray-400 font-medium my-3'>Đăng nhập bằng</span>

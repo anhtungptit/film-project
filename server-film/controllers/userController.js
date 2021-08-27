@@ -9,6 +9,7 @@ const fetch = require('node-fetch');
 
 exports.user_login = async (req, res) => {
     try{
+        console.log(req.cookies.tokenUser);
         const user = await User.findOne({ userEmail: req.body.userEmail});
         if(!user){
             return res.json({message: "Email doesn't exist"})
@@ -20,17 +21,17 @@ exports.user_login = async (req, res) => {
                     return res.json({message: "Password is incorrect"});
                 }else {
                     jwt.sign({
-                        username: user.userName
+                        _id: user._id
                     }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "24h"}, (err, token) => {
                         if(err){
                             return res.json({error: err})
                         }else {
+                            res.cookie("tokenUser", token);
                             return res.json({
                                 message: "You are logged in",
                                 username: user.userName,
                                 avatar: user.avatar,
-                                history: user.history,
-                                token: token
+                                history: user.history
                             })
                         }
                     })
@@ -58,17 +59,17 @@ exports.user_loginFaceBook = async (req, res) => {
             return res.json({ message: "Tài khoản của bạn đã bị khóa"});
         }
         jwt.sign({
-            username: userCheck.userName
+            _id: userCheck._id
         }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "24h"}, (err, token) => {
             if(err){
                 return res.json({error: err})
             }else {
+                res.cookie("tokenUser", token);
                 return res.json({
                     message: "You are logged in",
                     username: userCheck.userName,
                     avatar: userCheck.avatar,
-                    history: userCheck.history,
-                    token: token
+                    history: userCheck.history
                 })
             }
         })
@@ -105,17 +106,17 @@ exports.user_loginGoogle = async (req, res) => {
                 return res.json({ message: "Tài khoản của bạn đã bị khóa"});
             }
             jwt.sign({
-                username: userCheck.userName
+                _id: userCheck._id
             }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "24h"}, (err, token) => {
                 if(err){
                     return res.json({error: err})
                 }else {
+                    res.cookie("tokenUser", token);
                     return res.json({
                         message: "You are logged in",
                         username: userCheck.userName,
                         avatar: userCheck.avatar,
-                        history: userCheck.history,
-                        token: token
+                        history: userCheck.history
                     })
                 }
             })
@@ -161,9 +162,20 @@ exports.user_signup = async(req, res) => {
                         password: hash
                     });
                     const savedUser = await user.save();
-                    return res.json({
-                        message: "User created succesfully",
-                        user: savedUser
+                    jwt.sign({
+                        _id: user._id
+                    }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "24h"}, (err, token) => {
+                        if(err){
+                            return res.json({error: err})
+                        }else {
+                            res.cookie("tokenUser", token);
+                            return res.json({
+                                message: "You are logged in",
+                                username: savedUser.userName,
+                                avatar: savedUser.avatar,
+                                history: savedUser.history
+                            })
+                        }
                     })
                 }
             });

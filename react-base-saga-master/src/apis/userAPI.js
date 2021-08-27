@@ -15,4 +15,9 @@ export const loginGoogleAPI = async (tokenId) => {
     return response;
 };
 
+export const signupAPI = async (userName, userEmail, password) => {
+    const response = await axios.post('http://localhost:8000/users/signup', {userName, userEmail, password}, {withCredentials: true});
+    return response;
+};
+
 export default loginUser;

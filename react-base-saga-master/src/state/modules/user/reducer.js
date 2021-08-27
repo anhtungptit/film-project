@@ -15,10 +15,11 @@ const initialState = fromJS({
     user: null
 });
 
-const loginSuccess = (state, action) => state.set('user', fromJS(action.payload));
+const success = (state, action) => state.set('user', fromJS(action.payload));
 
 const reducer = handleActions({
-    [types.LOGIN_SUCCESS]: loginSuccess
+    [types.LOGIN_SUCCESS]: success,
+    [types.SIGNUP_SUCCESS]: success
 }, initialState);
 
 export default reducer;
