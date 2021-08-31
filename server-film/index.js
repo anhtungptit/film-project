@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 
 const userRoutes = require('./routes/users');
-const filmRoutes = require('./routes/films');
+const movieRoutes = require('./routes/movies');
 
 const cors = require("cors")
 require('dotenv').config();
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/users', userRoutes);
-app.use('/films', filmRoutes);
+app.use('/movies', movieRoutes);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

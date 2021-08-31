@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const filmSchema = mongoose.Schema({
+const movieSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -36,9 +36,13 @@ const filmSchema = mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    reviews: {
+        type: Array,
+        default: []
     }
 })
 
-filmSchema.index({ title: "text"});
+movieSchema.index({ title: "text"});
 
-module.exports = mongoose.model('Film', filmSchema);
+module.exports = mongoose.model('Movie', movieSchema);
