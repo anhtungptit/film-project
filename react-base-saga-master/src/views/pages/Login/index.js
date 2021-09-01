@@ -46,7 +46,7 @@ function Login() {
 
     return (
         <div className='login w-full h-screen bg-login-background bg-cover flex justify-center items-center'>
-            <Link to='/home'>
+            <Link to='/'>
                 <img
                     src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png'
                     alt='logo'

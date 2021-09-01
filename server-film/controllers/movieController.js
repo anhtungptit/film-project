@@ -18,3 +18,12 @@ exports.movie_getByCategory = async (req, res) => {
         return res.json({error: err});
     }
 }
+
+exports.movie_getFilmForBanner = async (req, res) => {
+    try {
+        const movieForBanner = await Movie.findOne({title: "The Flash (Tia Chớp)"});
+        return res.json(movieForBanner);
+    } catch(err){
+        return res.json({error: err})
+    }
+}

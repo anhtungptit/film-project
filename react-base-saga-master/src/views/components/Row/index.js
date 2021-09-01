@@ -17,7 +17,7 @@ function Row({ genre, title }) {
 
     useEffect(() => {
         axios.get(`http://localhost:8000/movies/filmByCategory?genre=${genre}`)
-            .then(res => setMovies(res.data));
+            .then((res) => setMovies(res.data));
     }, [genre]);
 
     useEffect(() => {
@@ -26,11 +26,11 @@ function Row({ genre, title }) {
         }
     }, [movies]);
     return (
-        <div className='w-screen px-9'>
-            <p>{title}</p>
+        <div className='w-screen px-9 text-white pb-7'>
+            <p className='text-3xl font-bold mb-3'>{title}</p>
             <div className='flex w-full'>
                 {movies.map((movie) => (
-                    <img key={movie._id} src={movie.posterImg} className='w-img mr-6' />
+                    <img key={movie._id} src={movie.posterImg} className='w-img mr-6 cursor-pointer' />
                 ))}
             </div>
         </div>
