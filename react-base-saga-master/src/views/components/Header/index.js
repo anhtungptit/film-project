@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import SearchIcon from '@material-ui/icons/Search';
 
-function Header() {
+function Header({showOption, setShowOption}) {
     const [show, handleShow] = useState(false);
     useEffect(() => {
         window.addEventListener('scroll', () => {
@@ -23,6 +24,11 @@ function Header() {
     const handleLogin = () => {
         history.push('/login');
     };
+
+    const handleOption = () => {
+        setShowOption(!showOption);
+        console.log(showOption);
+    };
     return (
         <div className={`fixed flex items-center justify-between text-white px-10 py-3 w-screen ${show ? 'bg-banner' : ''}`}>
             <div className='flex'>
@@ -31,7 +37,7 @@ function Header() {
                     alt='Logo'
                     className='w-28 object-contain cursor-pointer'
                 />
-                <div className='flex cursor-pointer ml-4 px-3 border-2 border-white'>
+                <div className='flex cursor-pointer ml-4 px-3 border-2 border-white' onClick={handleOption}>
                     <p>Thể loại</p>
                     <ArrowDropDownIcon />
                 </div>
@@ -46,5 +52,15 @@ function Header() {
         </div>
     );
 }
+
+Header.propTypes = {
+    showOption: PropTypes.bool,
+    setShowOption: PropTypes.func
+};
+
+Header.defaultProps = {
+    showOption: false,
+    setShowOption: () => {}
+};
 
 export default Header;

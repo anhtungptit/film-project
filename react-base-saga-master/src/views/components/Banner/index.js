@@ -17,7 +17,7 @@ function Banner() {
                 <p>Star here</p>
                 <p className='text-xl'>{filmForBanner.description}</p>
             </div>
-            <div className='background_fadeBottom mt-10' />
+            <div className='background_fadeBottom' />
         </div>
     );
 }
