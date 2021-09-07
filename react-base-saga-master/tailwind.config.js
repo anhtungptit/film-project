@@ -8,7 +8,9 @@ module.exports = {
                 'banner-background': "url('https://res.cloudinary.com/bcvt/image/upload/v1630313895/movies/the_flash_banner_k90oc3.jpg')"
             }),
             backgroundColor: (theme) => ({
-                banner: '#111'
+                banner: '#111',
+                comment: 'rgba(12,12,12,var(--tw-bg-opacity))',
+                area: 'rgba(51,51,51,var(--tw-bg-opacity))'
             }),
             width: {
                 '2/7': '28.5714286%',

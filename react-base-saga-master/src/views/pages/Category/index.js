@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 
-// import { userActions } from '../../../state/modules/user';
-import Banner from '../../components/Banner';
 import Header from '../../components/Header';
-import Row from '../../components/Row';
 
-function HomePage() {
+function Category() {
+    const { genre } = useParams();
+    const [movies, setMovies] = useState([]);
     const [showOption, setShowOption] = useState(true);
-    const [showUser, setShowUser] = useState(false);
+    useEffect(() => {
+        axios.get(`http://localhost:8000/movies/allFilmByCategory?genre=${genre}`, {
+            withCredentials: true
+        })
+            .then((res) => setMovies(res.data));
+    }, [genre]);
 
-    // const dispatch = useDispatch();
-
-    // const handleSignout = () => {
-    //     dispatch(userActions.signout());
-    //     console.log('clicked');
-    // };
+    useEffect(() => {
+        if (movies) {
+            console.log(movies);
+        }
+    }, [movies]);
     return (
-        <div className='bg-banner w-screen h-full'>
+        <div className='bg-banner w-screen h-screen text-white'>
+            <Header showOption={showOption} setShowOption={setShowOption} />
             <div className={`${showOption ? 'invisible' : ''} flex justify-between w-2/6 h-1/5 bg-black fixed top-14 left-40 z-50 px-6 py-2 bg-opacity-70 text-white border border-gray-700`}>
                 <div className='flex flex-col'>
                     <Link to='/category/fiction' className='hover:underline'>Fiction</Link>
@@ -42,16 +46,19 @@ function HomePage() {
                     <Link to='/category/drama' className='hover:underline'>Drama</Link>
                 </div>
             </div>
-            <Header showOption={showOption} setShowOption={setShowOption} showUser={showUser} setShowUser={setShowUser} />
-            <Banner />
-            <Row genre='drama' title='Drama' />
-            <Row genre='fantasy' title='Fantansy' />
-            <Row genre='action' title='Action' />
-            <Row genre='adventure' title='Adventure' />
-            <Row genre='mystery' title='Mystery' />
-
+            <p className='pt-20 flex justify-center text-5xl font-semibold'>
+                THỂ LOẠI:
+                {genre.toUpperCase()}
+            </p>
+            <div className='flex flex-wrap pl-24 pr-10 pt-10'>
+                {movies.map((movie) => (
+                    <Link to={`/detailFilm/${movie._id}`} className='w-img mr-6 mb-6 cursor-pointer'>
+                        <img src={movie.posterImg} alt='poster' />
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }
 
-export default HomePage;
+export default Category;

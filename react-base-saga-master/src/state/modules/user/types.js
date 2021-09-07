@@ -12,11 +12,16 @@ const LOGIN_GOOGLE = 'user/LOGIN_GOOGLE';
 const SIGNUP = 'user/SIGNUP';
 const SIGNUP_SUCCESS = 'user/';
 
+// signout
+const SIGNOUT = 'user/SIGNOUT';
+const SIGNOUT_SUCCESS = 'user/SIGNOUT_SUCCESS';
 export default {
     LOGIN,
     LOGIN_SUCCESS,
     LOGIN_FACEBOOK,
     LOGIN_GOOGLE,
     SIGNUP,
-    SIGNUP_SUCCESS
+    SIGNUP_SUCCESS,
+    SIGNOUT,
+    SIGNOUT_SUCCESS
 };

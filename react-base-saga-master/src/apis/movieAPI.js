@@ -1,8 +1,14 @@
 import axios from 'axios';
 
-const getMovieAPI = async ({genre}) => {
-    const response = await axios.get(`http://localhost:8000/movies/filmByCategory?genre=${genre}`);
+export const getDetailsFimAPI = async (id) => {
+    const response = await axios.get(`http://localhost:8000/movies/detailsFilm?id=${id}`, {withCredentials: true});
     return response;
 };
 
-export default getMovieAPI;
+export const addCommentAPI = async ({id, comment}) => {
+    const response = await axios.post(`http://localhost:8000/movies/addComment?id=${id}`, {comment}, {withCredentials: true});
+    console.log(response);
+    return response;
+};
+
+export default getDetailsFimAPI;

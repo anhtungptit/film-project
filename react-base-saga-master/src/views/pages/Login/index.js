@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
@@ -9,15 +9,16 @@ import { userActions, userSelectors } from '../../../state/modules/user';
 function Login() {
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
-    const user = useSelector(userSelectors.user);
+    // const user = useSelector(userSelectors.user);
 
-    useEffect(() => {
-        if (user !== null) {
-            const entries = new Map(user._root.entries);
-            const userObj = Object.fromEntries(entries);
-            console.log(userObj);
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (user !== null) {
+    //         // const entries = new Map(user._root.entries);
+    //         // const userObj = Object.fromEntries(entries);
+    //         // // console.log(userObj);
+    //         // console.log(user.toJS());
+    //     }
+    // }, [user]);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -36,13 +37,22 @@ function Login() {
         dispatch(userActions.loginFacebook({userID: res.userID, accessToken: res.accessToken }));
     };
 
-    const handleSubmit = (e) => {
+    const user = useSelector(userSelectors.user);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(userEmail, password);
         dispatch(userActions.login({userEmail, password }));
-        e.target.reset();
-        history.push('/');
+        // if (responseAction.payload.message === 'Password is incorrect') {
+        //     alert('Password incorrect');
+        // } else {
+        //     history.push('/');
+        // }
     };
+    useEffect(() => {
+        if (user !== null && user.toJS().message === 'You are logged in') {
+            history.push('/');
+        }
+    }, [user, history]);
 
     return (
         <div className='login w-full h-screen bg-login-background bg-cover flex justify-center items-center'>

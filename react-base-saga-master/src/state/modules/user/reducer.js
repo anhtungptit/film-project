@@ -16,10 +16,12 @@ const initialState = fromJS({
 });
 
 const success = (state, action) => state.set('user', fromJS(action.payload));
+const signoutSuccess = (state) => state.set('user', null);
 
 const reducer = handleActions({
     [types.LOGIN_SUCCESS]: success,
-    [types.SIGNUP_SUCCESS]: success
+    [types.SIGNUP_SUCCESS]: success,
+    [types.SIGNOUT_SUCCESS]: signoutSuccess
 }, initialState);
 
 export default reducer;

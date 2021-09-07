@@ -1,8 +1,10 @@
-// Get movie by category
-const MOVIE_BY_CATEGORY = 'movie/movie_by_category';
-const GET_SUCCESS = 'movie/get_success';
+// GET DETAILS FILM
+const GET_DETAILS_FILM = 'movie/GET_DETAILS_FILM';
+const GET_SUCCESS = 'movie/GET_SUCCESS';
+const ADD_COMMENT = 'movie/ADD_COMMENT';
 
 export default {
-    MOVIE_BY_CATEGORY,
-    GET_SUCCESS
+    GET_DETAILS_FILM,
+    GET_SUCCESS,
+    ADD_COMMENT
 };

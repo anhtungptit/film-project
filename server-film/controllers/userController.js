@@ -184,3 +184,15 @@ exports.user_signup = async(req, res) => {
         return res.json({error: err});
     }
 }
+
+exports.deleteCookies = async (req, res) => {
+    try {
+        res.cookie('tokenUser', 'none', {
+            expires: new Date(Date.now() + 5 * 1000),
+            httpOnly: true,
+        })
+        return res.json({message: "logout succesfully"});
+    } catch(err) {
+        return res.json({error: err});
+    }
+}

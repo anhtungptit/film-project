@@ -4,21 +4,21 @@ import { handleActions } from 'redux-actions';
 import types from './types';
 
 //= ============== SELECTOR ===============//
-const movies = (state) => state.getIn(['movie', 'movies']);
+const movie = (state) => state.getIn(['movie', 'movie']);
 
 export const selectors = {
-    movies
+    movie
 };
 
 //= ============== REDUCER ===============//
 const initialState = fromJS({
-    movies: []
+    movie: null
 });
 
-const getSuccess = (state, action) => state.set('movies', action.payload);
+const success = (state, action) => state.set('movie', fromJS(action.payload));
 
 const reducer = handleActions({
-    [types.GET_SUCCESS]: getSuccess
+    [types.GET_SUCCESS]: success
 }, initialState);
 
 export default reducer;

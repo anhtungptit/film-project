@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // import { useDispatch } from 'react-redux';
 // import { movieActions, movieSelectors} from '../../../state/modules/movie';
@@ -16,21 +17,25 @@ function Row({ genre, title }) {
     // }, [genre, dispatch]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/movies/filmByCategory?genre=${genre}`)
+        axios.get(`http://localhost:8000/movies/filmByCategory?genre=${genre}`, {
+            withCredentials: true
+        })
             .then((res) => setMovies(res.data));
     }, [genre]);
 
-    useEffect(() => {
-        if (movies !== null) {
-            console.log(movies);
-        }
-    }, [movies]);
+    // useEffect(() => {
+    //     if (movies !== null) {
+    //         console.log(movies);
+    //     }
+    // }, [movies]);
     return (
         <div className='w-screen px-9 text-white pb-7'>
             <p className='text-3xl font-bold mb-3'>{title}</p>
             <div className='flex w-full'>
                 {movies.map((movie) => (
-                    <img key={movie._id} src={movie.posterImg} className='w-img mr-6 cursor-pointer' />
+                    <Link to={`/detailFilm/${movie._id}`} key={movie._id} className='w-img mr-6 cursor-pointer'>
+                        <img src={movie.posterImg} />
+                    </Link>
                 ))}
             </div>
         </div>
