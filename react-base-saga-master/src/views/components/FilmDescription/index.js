@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import ShareLink from 'react-facebook-share-link';
 
 import { movieSelectors } from '../../../state/modules/movie';
 import FilmComment from '../FilmComment';
@@ -21,6 +22,11 @@ function FilmDescription() {
                             <span className='text-gray-500 text-base font-bold'>Thể loại:</span>
                             {movie.toJS().movie.genre.map((i) => ` ${i},`)}
                         </p>
+                        <ShareLink link={movie.toJS().movie.filmUrl}>
+                            {(link) => (
+                                <a className='bg-blue-700 p-1 rounded' href={link} target='_blank' rel='noreferrer'>Share this on Facebook</a>
+                            )}
+                        </ShareLink>
                         <p className='text-gray-500 text-base font-bold pt-6'>
                             <span>Nội dung: </span>
                         </p>

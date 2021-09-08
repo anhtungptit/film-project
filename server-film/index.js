@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser')
 
 const userRoutes = require('./routes/users');
 const movieRoutes = require('./routes/movies');
+const adminRoutes = require('./routes/admins');
 
 const cors = require("cors")
 require('dotenv').config();
@@ -29,6 +30,7 @@ app.use(cookieParser());
 
 app.use('/users', userRoutes);
 app.use('/movies', movieRoutes);
+app.use('/admin', adminRoutes);
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

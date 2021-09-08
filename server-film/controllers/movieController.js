@@ -74,3 +74,13 @@ exports.movie_addComment = async (req, res) => {
         return res.json({error: err});
     }
 }
+
+exports.movie_getComment = async (req, res) => {
+    try {
+        const { id } = req.query;
+        const comment = await Movie.findById(id).select('reviews');
+        return res.json(comment);
+    } catch(err) {
+        return res.json({error: err});
+    }
+}

@@ -7,7 +7,6 @@ export const getDetailsFimAPI = async (id) => {
 
 export const addCommentAPI = async ({id, comment}) => {
     const response = await axios.post(`http://localhost:8000/movies/addComment?id=${id}`, {comment}, {withCredentials: true});
-    console.log(response);
     return response;
 };
 

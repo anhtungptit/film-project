@@ -9,7 +9,6 @@ const fetch = require('node-fetch');
 
 exports.user_login = async (req, res) => {
     try{
-        console.log(req.cookies.tokenUser);
         const user = await User.findOne({ userEmail: req.body.userEmail});
         if(!user){
             return res.json({message: "Email doesn't exist"})

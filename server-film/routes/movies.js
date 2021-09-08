@@ -10,5 +10,6 @@ router.get('/filmForBanner', movieController.movie_getFilmForBanner);
 router.get('/filmBySearch', movieController.movie_getFilmBySearch);
 router.get('/detailsFilm', movieController.movie_getDetailsFilm);
 router.post('/addComment', movieController.movie_addComment);
+router.get('/getComment', movieController.movie_getComment);
 
 module.exports = router;

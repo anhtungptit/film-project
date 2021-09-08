@@ -13,7 +13,7 @@ function FilmFrame() {
     return (
         <div className='w-screen h-screen'>
             {movie !== null ? (
-                <iframe className='w-full h-full' src={movie.toJS().movie.filmUrl} title='YouTube video player' frameBorder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' />
+                <iframe className='w-full h-full' src={movie.toJS().movie.filmUrl} title='YouTube video player' frameBorder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowFullScreen />
             ) : ''}
 
         </div>

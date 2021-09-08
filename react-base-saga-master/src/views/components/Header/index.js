@@ -61,7 +61,7 @@ function Header({showOption, setShowOption}) {
         history.push(`/search/${inputSearch}`);
     };
     return (
-        <div className={`fixed flex items-center justify-between text-white px-10 py-3 w-screen ${show ? 'bg-banner' : ''}`}>
+        <div className={`fixed flex items-center justify-between text-white px-10 py-3 z-50 w-screen ${show ? 'bg-banner' : ''}`}>
             <div className='flex'>
                 <Link to='/'>
                     <img
