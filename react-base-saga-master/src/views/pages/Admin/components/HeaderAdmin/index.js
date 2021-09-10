@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { adminActions, adminSelectors } from '../../../../../state/modules/admin';
 
+import SearchIcon from '@material-ui/icons/Search';
+
 function HeaderAdmin() {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -28,8 +30,12 @@ function HeaderAdmin() {
                     />
                 </Link>
             </div>
-            <div className='flex items-center' onClick={handleLogout}>
-                <button type='button' className='bg-red-700 px-3 py-2 rounded'>Đăng xuất</button>
+            <div className='flex items-center'>
+                <form className='bg-banner mr-3 py-1 flex items-center border-2 border-white'>
+                    <input type='input' className='bg-transparent mr-1 px-2 outline-none' />
+                    <SearchIcon className='text-white' />
+                </form>
+                <button onClick={handleLogout} type='button' className='bg-red-700 px-3 py-2 rounded'>Đăng xuất</button>
             </div>
         </div>
     );

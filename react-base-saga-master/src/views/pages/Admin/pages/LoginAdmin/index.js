@@ -24,7 +24,9 @@ function LoginAdmin() {
         if (admin !== null) {
             console.log(admin.toJS());
             if (admin.toJS().message === 'You are logged in') {
-                history.push('/admin/home');
+                history.push('/admin/user');
+            } else {
+                alert(admin.toJS().message);
             }
         }
     }, [admin, history]);

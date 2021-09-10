@@ -51,6 +51,8 @@ function Header({showOption, setShowOption}) {
     const handleLogout = () => {
         dispatch(userActions.signout());
         localStorage.clear();
+        setIsLogged(false);
+        history.push('/');
     };
 
     const handleOption = () => {

@@ -10,7 +10,8 @@ module.exports = {
             backgroundColor: (theme) => ({
                 banner: '#111',
                 comment: 'rgba(12,12,12,var(--tw-bg-opacity))',
-                area: 'rgba(51,51,51,var(--tw-bg-opacity))'
+                area: 'rgba(51,51,51,var(--tw-bg-opacity))',
+                admin: '#202124'
             }),
             width: {
                 '2/7': '28.5714286%',

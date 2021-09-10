@@ -7,7 +7,8 @@ const Category = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views
 const Search = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Search'));
 const DetailFilm = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/DetailFilm'));
 const LoginAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/LoginAdmin'));
-const HomeAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/HomeAdmin'));
+const UserAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/UserAdmin'));
+const MovieAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/MovieAdmin'));
 
 const routers = [
     {
@@ -39,8 +40,12 @@ const routers = [
         component: LoginAdmin
     },
     {
-        path: '/admin/home',
-        component: HomeAdmin
+        path: '/admin/user',
+        component: UserAdmin
+    },
+    {
+        path: '/admin/movie',
+        component: MovieAdmin
     }
 ];
 

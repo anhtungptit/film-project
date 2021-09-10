@@ -9,5 +9,6 @@ router.post('/login', userController.user_login);
 router.post('/loginGoogle', userController.user_loginGoogle);
 router.post('/loginFacebook', userController.user_loginFaceBook);
 router.post('/signout', userController.deleteCookies);
+router.post('/saveHistory', userController.saveHistory);
 
 module.exports = router

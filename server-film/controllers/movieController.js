@@ -52,7 +52,11 @@ exports.movie_getDetailsFilm = async (req, res) => {
     try {
         const { id } = req.query;
         const movie = await Movie.findById(id);
-        const related = await Movie.find({ genre: { $in: [...movie.genre] }}).limit(8);
+        // const related = await Movie.find({ genre: { $in: [...movie.genre] }}).limit(8);
+        const related = await Movie.aggregate([
+            { $match: {genre: { $in: [...movie.genre]}}},
+            { $sample: { size: 8 } }
+        ])
         return res.json({
             movie,
             related

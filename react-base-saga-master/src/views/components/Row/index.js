@@ -23,11 +23,11 @@ function Row({ genre, title }) {
             .then((res) => setMovies(res.data));
     }, [genre]);
 
-    // useEffect(() => {
-    //     if (movies !== null) {
-    //         console.log(movies);
-    //     }
-    // }, [movies]);
+    useEffect(() => {
+        if (movies !== null) {
+            console.log(movies);
+        }
+    }, [movies]);
     return (
         <div className='w-screen px-9 text-white pb-7'>
             <p className='text-3xl font-bold mb-3'>{title}</p>

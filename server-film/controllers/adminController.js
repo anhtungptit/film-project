@@ -1,4 +1,6 @@
 const Admin = require('../models/admin');
+const User = require('../models/user');
+const Movie = require('../models/movie');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -85,6 +87,48 @@ exports.admin_deleteCookies = async (req, res) => {
         })
         return res.json({message: "logout succesfully"});
     } catch(err){
+        return res.json({error: err});
+    }
+}
+
+exports.admin_getAllUser = async (req, res) => {
+    try {
+        const users = await User.find();
+        return res.json(users);
+    } catch (err) {
+        return res.json({error: err});
+    }
+}
+
+exports.admin_blockUser = async (req, res) => {
+    try {
+        const { id } = req.query;
+        const user =  await User.findOneAndUpdate({_id: id}, {isActive: false}, {
+            new: true
+          });
+        return res.json(user);
+    } catch(err) {
+        return res.json({error: err});
+    }
+}
+
+exports.admin_unblockUser = async (req, res) => {
+    try {
+        const { id } = req.query;
+        const user =  await User.findOneAndUpdate({_id: id}, {isActive: true}, {
+            new: true
+          });
+        return res.json(user);
+    } catch(err) {
+        return res.json({error: err});
+    }
+}
+
+exports.admin_getAllMovie = async (req, res) => {
+    try {
+        const movies = await Movie.find();
+        return res.json(movies);
+    } catch(err) {
         return res.json({error: err});
     }
 }

@@ -13,6 +13,9 @@ exports.user_login = async (req, res) => {
         if(!user){
             return res.json({message: "Email doesn't exist"})
         }else {
+            if(user.isActive === false) {
+                return res.json({message: "Tài khoản đã bị khóa"});
+            }
             bcrypt.compare(req.body.password, user.password, (err, result) => {
                 if(err){
                     return res.json({error: err});
@@ -27,6 +30,7 @@ exports.user_login = async (req, res) => {
                         }else {
                             res.cookie("tokenUser", token);
                             return res.json({
+                                _id: user._id,
                                 message: "You are logged in",
                                 username: user.userName,
                                 avatar: user.avatar,
@@ -65,6 +69,7 @@ exports.user_loginFaceBook = async (req, res) => {
             }else {
                 res.cookie("tokenUser", token);
                 return res.json({
+                    _id: user._id,
                     message: "You are logged in",
                     username: userCheck.userName,
                     avatar: userCheck.avatar,
@@ -112,6 +117,7 @@ exports.user_loginGoogle = async (req, res) => {
                 }else {
                     res.cookie("tokenUser", token);
                     return res.json({
+                        _id: user._id,
                         message: "You are logged in",
                         username: userCheck.userName,
                         avatar: userCheck.avatar,
@@ -192,6 +198,19 @@ exports.deleteCookies = async (req, res) => {
         })
         return res.json({message: "logout succesfully"});
     } catch(err) {
+        return res.json({error: err});
+    }
+}
+
+exports.saveHistory = async (req, res) => {
+    try {
+        const movie = req.body;
+        const { idUser } = req.query;
+        const user = await User.findById(idUser);
+        user.history.unshift(movie);
+        await user.save();
+        return res.json(user);
+    }catch (err) {
         return res.json({error: err});
     }
 }

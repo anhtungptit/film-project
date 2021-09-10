@@ -51,6 +51,8 @@ function Login() {
     useEffect(() => {
         if (user !== null && user.toJS().message === 'You are logged in') {
             history.push('/');
+        } else if (user !== null) {
+            alert(user.toJS().message);
         }
     }, [user, history]);
 
