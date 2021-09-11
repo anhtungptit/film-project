@@ -48,7 +48,7 @@ function Header({showOption, setShowOption}) {
         history.push('/login');
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(userActions.signout());
         localStorage.clear();
         setIsLogged(false);

@@ -15,6 +15,11 @@ const SIGNUP_SUCCESS = 'user/';
 // signout
 const SIGNOUT = 'user/SIGNOUT';
 const SIGNOUT_SUCCESS = 'user/SIGNOUT_SUCCESS';
+
+// save history
+// const SAVE_HISTORY = 'user/SAVE_HISTORY';
+// const SAVE_HISTORY_SUCCESS = 'user/SAVE_SUCCESS';
+
 export default {
     LOGIN,
     LOGIN_SUCCESS,

@@ -69,7 +69,7 @@ exports.user_loginFaceBook = async (req, res) => {
             }else {
                 res.cookie("tokenUser", token);
                 return res.json({
-                    _id: user._id,
+                    _id: userCheck._id,
                     message: "You are logged in",
                     username: userCheck.userName,
                     avatar: userCheck.avatar,
@@ -100,8 +100,8 @@ exports.user_loginFaceBook = async (req, res) => {
 
 exports.user_loginGoogle = async (req, res) => {
     const {tokenId} = req.body;
-
     const response = await client.verifyIdToken({idToken: tokenId, audience: '733397129937-suoq2fgffo8br6hsqutkubqtn80u0bqf.apps.googleusercontent.com'});
+    console.log(response);
     const {email_verified, email, name, picture} = response.payload;
     if(email_verified){
         const userCheck = await User.findOne({ userEmail: email});
@@ -117,7 +117,7 @@ exports.user_loginGoogle = async (req, res) => {
                 }else {
                     res.cookie("tokenUser", token);
                     return res.json({
-                        _id: user._id,
+                        _id: userCheck._id,
                         message: "You are logged in",
                         username: userCheck.userName,
                         avatar: userCheck.avatar,
@@ -207,9 +207,20 @@ exports.saveHistory = async (req, res) => {
         const movie = req.body;
         const { idUser } = req.query;
         const user = await User.findById(idUser);
-        user.history.unshift(movie);
+        for (let i = 0; i < user.history.length; i++) {
+            if(movie._id === user.history[i]._id){
+                return res.json(user.history);
+            }
+        }
+        if(user.history.length === 8){
+            user.history.pop();
+        }
+        user.history.unshift({
+            _id: movie._id,
+            posterImg: movie.posterImg
+        });
         await user.save();
-        return res.json(user);
+        return res.json(user.history);
     }catch (err) {
         return res.json({error: err});
     }

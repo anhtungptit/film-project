@@ -9,16 +9,6 @@ import { userActions, userSelectors } from '../../../state/modules/user';
 function Login() {
     const [userEmail, setUserEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const user = useSelector(userSelectors.user);
-
-    // useEffect(() => {
-    //     if (user !== null) {
-    //         // const entries = new Map(user._root.entries);
-    //         // const userObj = Object.fromEntries(entries);
-    //         // // console.log(userObj);
-    //         // console.log(user.toJS());
-    //     }
-    // }, [user]);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -48,6 +38,7 @@ function Login() {
         //     history.push('/');
         // }
     };
+
     useEffect(() => {
         if (user !== null && user.toJS().message === 'You are logged in') {
             history.push('/');

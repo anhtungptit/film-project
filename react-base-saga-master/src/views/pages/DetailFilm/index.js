@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 
 import { movieActions } from '../../../state/modules/movie';
 import Header from '../../components/Header';
@@ -12,10 +12,19 @@ import RelatedFilm from '../../components/RelatedFilm';
 function DetailFilm() {
     const { id } = useParams();
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(movieActions.getDetailsFilm({id}));
     }, [id, dispatch]);
+
+    // const movie = useSelector(movieSelectors.movie);
+
+    // useEffect(() => {
+    //     if (movie !== null && JSON.parse(localStorage.getItem('login'))._id) {
+    //         const idUser = JSON.parse(localStorage.getItem('login'))._id;
+    //         dispatch(userActions.addHistory({idUser, movie}));
+    //     }
+    // }, [movie, id, dispatch]);
+
     const [showOption, setShowOption] = useState(true);
     const [showUser, setShowUser] = useState(false);
 

@@ -18,6 +18,7 @@ export const loginGoogleAPI = async (tokenId) => {
     const response = await axios.post('http://localhost:8000/users/loginGoogle', {tokenId}, {
         withCredentials: true
     });
+    console.log(response);
     return response;
 };
 
