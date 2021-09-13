@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // import { userActions } from '../../../state/modules/user';
 import Banner from '../../components/Banner';
 import Header from '../../components/Header';
+import RecentRow from '../../components/RecentRow';
 import Row from '../../components/Row';
 
 function HomePage() {
@@ -44,6 +45,9 @@ function HomePage() {
             </div>
             <Header showOption={showOption} setShowOption={setShowOption} showUser={showUser} setShowUser={setShowUser} />
             <Banner />
+            {(JSON.parse(localStorage.getItem('login')) !== null)
+                ? <RecentRow />
+                : ''}
             <Row genre='drama' title='Drama' />
             <Row genre='fantasy' title='Fantansy' />
             <Row genre='action' title='Action' />

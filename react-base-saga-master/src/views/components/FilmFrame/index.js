@@ -1,33 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-// import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import { movieSelectors } from '../../../state/modules/movie';
 
 function FilmFrame() {
     // const { id } = useParams();
     const movie = useSelector(movieSelectors.movie);
-    // const [flatCheck, setFlatCheck] = useState(false);
+    useEffect(() => {
+        if (movie !== null && JSON.parse(localStorage.getItem('login')) !== null) {
+            const idUser = JSON.parse(localStorage.getItem('login'))._id;
+            axios.post(`http://localhost:8000/users/saveHistory?idUser=${idUser}`, {
+                _id: movie.toJS().movie._id,
+                posterImg: movie.toJS().movie.posterImg
+            });
+        }
+    }, [movie]);
     // useEffect(() => {
-    //     if (localStorage.getItem('login') && movie !== null) {
-    //         const {history} = JSON.parse(localStorage.getItem('login'));
+    //     if (movie !== null && JSON.parse(localStorage.getItem('login')) !== null) {
+    //         let flatCheck = false;
+    //         const login = JSON.parse(localStorage.getItem('login'));
+    //         const idFilm = movie.toJS().movie._id;
     //         for (let i = 0; i < login.history.length; i++) {
-    //             if (history._id === id) {
-    //                 setFlatCheck(true);
+    //             if (login.history[i]._id === idFilm) {
+    //                 flatCheck = true;
     //                 break;
     //             }
     //         }
     //         if (!flatCheck) {
-    //             if (history.length === 8) {
-    //                 history.pop();
+    //             if (login.history.length === 8) {
+    //                 login.history.pop();
     //             }
-    //             history.unshift({
-    //                 _id: id,
+    //             login.history.unshift({
+    //                 _id: idFilm,
     //                 posterImg: movie.toJS().movie.posterImg
     //             });
+    //             localStorage.setItem('login', JSON.stringify(login));
     //         }
     //     }
-    // }, [movie, id, flatCheck]);
+    // }, [movie]);
     return (
         <div className='w-screen h-screen'>
             {movie !== null ? (

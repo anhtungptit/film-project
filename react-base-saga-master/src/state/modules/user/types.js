@@ -17,8 +17,7 @@ const SIGNOUT = 'user/SIGNOUT';
 const SIGNOUT_SUCCESS = 'user/SIGNOUT_SUCCESS';
 
 // save history
-// const SAVE_HISTORY = 'user/SAVE_HISTORY';
-// const SAVE_HISTORY_SUCCESS = 'user/SAVE_SUCCESS';
+const SAVE_HISTORY = 'user/SAVE_HISTORY';
 
 export default {
     LOGIN,
@@ -28,5 +27,6 @@ export default {
     SIGNUP,
     SIGNUP_SUCCESS,
     SIGNOUT,
-    SIGNOUT_SUCCESS
+    SIGNOUT_SUCCESS,
+    SAVE_HISTORY
 };

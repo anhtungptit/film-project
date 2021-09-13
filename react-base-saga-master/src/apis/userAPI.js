@@ -36,4 +36,10 @@ export const signoutAPI = async () => {
     console.log(r);
 };
 
+export const saveHistoryAPI = async ({idUser, history}) => {
+    await axios.post(`http://localhost:8000/users/saveHistory?idUser=${idUser}`, history, {
+        withCredentials: true
+    });
+};
+
 export default loginUser;

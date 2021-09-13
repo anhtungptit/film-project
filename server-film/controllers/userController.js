@@ -101,7 +101,6 @@ exports.user_loginFaceBook = async (req, res) => {
 exports.user_loginGoogle = async (req, res) => {
     const {tokenId} = req.body;
     const response = await client.verifyIdToken({idToken: tokenId, audience: '733397129937-suoq2fgffo8br6hsqutkubqtn80u0bqf.apps.googleusercontent.com'});
-    console.log(response);
     const {email_verified, email, name, picture} = response.payload;
     if(email_verified){
         const userCheck = await User.findOne({ userEmail: email});
@@ -202,13 +201,23 @@ exports.deleteCookies = async (req, res) => {
     }
 }
 
+exports.getUserHistory = async (req, res) => {
+    try {
+        const { idUser } = req.query;
+        const user = await User.findById(idUser);
+        return res.json(user.history);
+    } catch(err) {
+        return res.json({error: err});
+    } 
+}
+
 exports.saveHistory = async (req, res) => {
     try {
-        const movie = req.body;
+        const {_id, posterImg} = req.body;
         const { idUser } = req.query;
         const user = await User.findById(idUser);
         for (let i = 0; i < user.history.length; i++) {
-            if(movie._id === user.history[i]._id){
+            if(_id === user.history[i]._id){
                 return res.json(user.history);
             }
         }
@@ -216,8 +225,8 @@ exports.saveHistory = async (req, res) => {
             user.history.pop();
         }
         user.history.unshift({
-            _id: movie._id,
-            posterImg: movie.posterImg
+            _id: _id,
+            posterImg: posterImg
         });
         await user.save();
         return res.json(user.history);

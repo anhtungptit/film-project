@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 
-import loginUser, {loginFacebookAPI, loginGoogleAPI, signoutAPI, signupAPI} from '../../../apis/userAPI';
+import loginUser, {loginFacebookAPI, loginGoogleAPI, saveHistoryAPI, signoutAPI, signupAPI} from '../../../apis/userAPI';
 import {put, call, takeEvery} from 'redux-saga/effects';
 import types from './types';
 
@@ -14,13 +14,15 @@ const signup = createAction(types.SIGNUP);
 const signupSuccess = createAction(types.SIGNUP_SUCCESS);
 const signout = createAction(types.SIGNOUT);
 const signoutSuccess = createAction(types.SIGNOUT_SUCCESS);
+const saveHistory = createAction(types.SAVE_HISTORY);
 
 export const actions = {
     login,
     loginFacebook,
     loginGoogle,
     signup,
-    signout
+    signout,
+    saveHistory
 };
 
 //= =============== SAGAS ===============//
@@ -30,6 +32,7 @@ export function* sagas() {
     yield takeEvery(types.LOGIN_GOOGLE, loginGoogleSaga);
     yield takeEvery(types.SIGNUP, signupSaga);
     yield takeEvery(types.SIGNOUT, signoutSaga);
+    yield takeEvery(types.SAVE_HISTORY, saveHistorySaga);
 }
 
 function* loginSaga(action) {
@@ -55,4 +58,8 @@ function* signupSaga(action) {
 function* signoutSaga() {
     yield call(signoutAPI);
     yield put(signoutSuccess());
+}
+
+function* saveHistorySaga(action) {
+    yield call(saveHistoryAPI, action.payload);
 }
