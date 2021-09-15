@@ -10,6 +10,7 @@ const LoginAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Vie
 const UserAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/UserAdmin'));
 const MovieAdmin = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/MovieAdmin'));
 const EditMovie = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/EditMovie'));
+const AddMovie = Loadable(() => import(/* webpackChunkName: "js/home" */ '@Views/pages/Admin/pages/AddMovie'));
 
 const routers = [
     {
@@ -51,6 +52,10 @@ const routers = [
     {
         path: '/admin/editMovie/:idMovie',
         component: EditMovie
+    },
+    {
+        path: '/admin/addMovie',
+        component: AddMovie
     }
 ];
 

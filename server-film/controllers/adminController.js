@@ -132,3 +132,61 @@ exports.admin_getAllMovie = async (req, res) => {
         return res.json({error: err});
     }
 }
+
+exports.admin_changeDetailsMovie = async (req, res) => {
+    try {
+        const { idFilm } = req.query;
+        const {title, genre, actor, description, posterImg, filmUrl} = req.body;
+        const movie = await Movie.findById(idFilm);
+        if (posterImg) {
+            movie.title = title;
+            movie.genre = [...genre.split(', ')];
+            movie.actor = [...actor.split(', ')];
+            movie.description = description;
+            movie.posterImg = posterImg;
+            movie.filmUrl = filmUrl;
+            movie.save();
+        } else {
+            movie.title = title;
+            movie.genre = [...genre.split(', ')];
+            movie.actor = [...actor.split(', ')];
+            movie.description = description;
+            movie.filmUrl = filmUrl;
+            movie.save();
+        }
+        return res.json(movie);
+    } catch(err) {
+        return res.json({error: err});
+    }
+}
+
+exports.admin_addMovie = async (req, res) => {
+    try {
+        const {actor, genre, title, posterImg, description, filmUrl} = req.body;
+        const movie = new Movie({
+            actor: [...actor],
+            genre: [...genre],
+            reviews: [],
+            title: title,
+            posterImg: posterImg,
+            bannerImg: posterImg,
+            description: description,
+            trailerUrl: filmUrl,
+            filmUrl: filmUrl
+        });
+        await movie.save();
+        return res.json(movie);
+    } catch(err) {
+        return res.json({error: err});
+    }
+}
+
+exports.admin_removeMovie = async (req, res) => {
+    try {
+        const { idFilm } = req.query;
+        await Movie.findById(idFilm).remove();
+        return res.json({message: "Remove film successfuly"});
+    } catch(err) {
+        return res.json({error: err});
+    }
+}
